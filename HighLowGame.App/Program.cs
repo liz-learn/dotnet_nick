@@ -1,26 +1,27 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using HighLowGame.App;
 
-var targetNumber = Random.Shared.Next(1, 11);
-var numberGuesses = 1;
-var userInput = "";
+int targetNumber =  Random.Shared.Next(1, 11);
+
+HighLowTestGuess game = new(targetNumber)
+{
+    TargetNumber = targetNumber,
+    NumberOfGuesses = 0
+};
+
 
 while (true) {
-    Console.Write("enter guess: ");
-    userInput = Console.ReadLine();
+    Console.WriteLine("enter guess: ");
+    var userInput = Console.ReadLine();
     if (!int.TryParse(userInput, out var userGuess)){
         continue;
     }
 
-    if (targetNumber == userGuess){
-        Console.Write($"You won with {numberGuesses} guesses!\n");
+    string result = game.TestGuess(userGuess);
+    if (result == "Correct!"){
+        Console.WriteLine($"You won with {game.NumberOfGuesses} guess(es)!\n");
         break;
+    } else {
+        Console.WriteLine(result);
     }
-
-    if (userGuess > targetNumber){
-        Console.Write("Too High!");
-    } else{
-        Console.Write("Too Low!");
-    }
-
-    numberGuesses++;
 }
