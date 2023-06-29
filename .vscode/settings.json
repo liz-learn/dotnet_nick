@@ -1,3 +1,9 @@
 {
-    "dotnet.defaultSolution": "dotnet_nick.sln"
+    "dotnet.defaultSolution": "dotnet_nick.sln",
+    "dotnet-test-explorer.testProjectPath": "**/*Test.csproj",
+    "dotnet-test-explorer.autoExpandTree": true,
+    "dotnet-test-explorer.autoWatch": true,
+    "dotnet-test-explorer.codeLensPassed": "passed",
+    "dotnet-test-explorer.codeLensSkipped": "skipped",
+    "cSpell.diagnosticLevel": "Hint"
 }

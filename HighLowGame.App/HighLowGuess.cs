@@ -1,26 +1,26 @@
 namespace HighLowGame.App
 {
-    public class HighLowTestGuess {
+    public class HighLowGuess {
         public int NumberOfGuesses = 0;
         public int TargetNumber;
 
-        public HighLowTestGuess (int targetNumber) {
+        public HighLowGuess (int targetNumber) {
             TargetNumber = targetNumber;
         }
 
-        public string TestGuess(int guess)  {
+        public GuessResult TestGuess(int guess)
+        {
             NumberOfGuesses++;
             if (guess == TargetNumber) {
-                return "Correct!";
+                return GuessResult.Correct;
             }
             if (guess > TargetNumber) {
-                return "Too high!";
+                return GuessResult.TooHigh;
             }
             if (guess < TargetNumber) {
-                return "Too low!";
+                return GuessResult.TooLow;
             }
-            return "";
+            return GuessResult.Undefined;
         }
-
     }
 }
