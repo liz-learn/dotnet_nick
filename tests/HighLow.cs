@@ -2,26 +2,24 @@ using HighLowGame.App;
 
 namespace AllTest;
 
-public class HighLowTest
+public class HighLowTests
 {
+    public HighLowGuess underTest;
 
-    private HighLowGuess? underTest;
+    public HighLowTests ()
+    {
+       underTest = new HighLowGuess();
+    }
+
     public int NumberOfGuesses = 0;
-
 
     [Theory]
     [InlineData(10, 6, 5)]
     [InlineData(5, 5, 1)]
     [InlineData(1, 9, 9)]
-    public void GuessNumberWorksAsExpected(
-        int target, int firstGuess, int expectedNumTried
-
-    )
+    public void GuessNumberWorksAsExpected(int target, int firstGuess, int expectedNumTried)
     {
-        (int ActualResult, int ActualNumTried) = RunMethodUntilSuccess(firstGuess);
-
-        Console.WriteLine($"expectedTarget: {target}; expectedNumTried: {expectedNumTried}; FirstGuess: {firstGuess}");
-        Console.WriteLine($"ActualResult: {ActualResult}; ActualNumTried: {ActualNumTried}; ");
+        (int ActualResult, int ActualNumTried) = RunMethodUntilSuccess(firstGuess, target);
 
         Assert.False(ActualResult == 20);
         Assert.False(ActualNumTried == 20);
@@ -29,20 +27,28 @@ public class HighLowTest
         Assert.True(ActualNumTried == expectedNumTried);
     }
 
-    public static (int ActualResult, int ActualNumTried) RunMethodUntilSuccess(int firstGuess) {
-        int userGuess = firstGuess;
-        while (true){
-            if (userGuess == 6) {
-                return (10, 5);
-            }
-            if (userGuess == 5) {
-                return (5, 1);
-            }
-            if (userGuess == 9) {
-                return (1, 9);
-            }
-            return (20, 20);
+    public (int ActualResult, int ActualNumTried) RunMethodUntilSuccess(int userGuess, int target)
+    {
+        int actualResult = 20;
+        int actualNumTried = 20;
 
+        while (true){
+            GuessResult resEnum = underTest.TestGuess(userGuess, target);
+
+            if (resEnum == GuessResult.Correct) {
+                return (userGuess, underTest.NumberOfGuesses);
+            }
+
+            if (resEnum == GuessResult.TooHigh) {
+                userGuess--;
+                continue;
+            }
+
+            if (resEnum == GuessResult.TooLow) {
+                userGuess++;
+                continue;
+            }
+            return (actualResult, actualNumTried);
         }
     }
 }
