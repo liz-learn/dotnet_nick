@@ -20,4 +20,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HighLowGame.App\HighLowGame.App.csproj" />
+  </ItemGroup>
 </Project>

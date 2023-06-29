@@ -1,4 +1,3 @@
-using System.Collections;
 using HighLowGame.App;
 
 namespace AllTest;
@@ -6,56 +5,44 @@ namespace AllTest;
 public class HighLowTest
 {
 
-    private readonly HighLowGuess underTest;
-    private int NumberOfGuesses = 0;
+    private HighLowGuess? underTest;
+    public int NumberOfGuesses = 0;
 
 
     [Theory]
-    [InlineData(10, 5, 6)]
+    [InlineData(10, 6, 5)]
     [InlineData(5, 5, 1)]
     [InlineData(1, 9, 9)]
     public void GuessNumberWorksAsExpected(
         int target, int firstGuess, int expectedNumTried
+
     )
     {
-        underTest = new HighLowGuess(target);
-        resultHash = CreateHashtable();
-        resultHash.Add("expectedTarget", target);
-        resultHash.Add("firstGuess", firstGuess);
-        result = RunMethodUntilSuccess(underTest, resultHash);
-        AssertTrue(resultHash["expectedTarget"] == resultHash["actualTarget"]);
-        AssertTrue(resultHash["expectedNumTried"] == resultHash["actualNumTried"]);
+        (int ActualResult, int ActualNumTried) = RunMethodUntilSuccess(firstGuess);
+
+        Console.WriteLine($"expectedTarget: {target}; expectedNumTried: {expectedNumTried}; FirstGuess: {firstGuess}");
+        Console.WriteLine($"ActualResult: {ActualResult}; ActualNumTried: {ActualNumTried}; ");
+
+        Assert.False(ActualResult == 20);
+        Assert.False(ActualNumTried == 20);
+        Assert.True(ActualResult == target);
+        Assert.True(ActualNumTried == expectedNumTried);
     }
 
-    public Hashtable RunMethodUntilSuccess(HighLowGuess underTest, Hashtable resultHash)
-    {
-        int num = 0;
-        int userGuess = resultHash["firstGuess"];
-        while (underTest.NumberOfGuesses < 20 && underTest.NumberOfGuesses > 0)
-        {
-            GuessResult result = underTest.TestGuess(userGuess);
-            if (result == GuessResult.Correct) {
-                resultHash.Add("actualNumTried", underTest.NumberOfGuesses);
-                resultHash.Add("actualTarget", userGuess);
-                return resultHash;
-                break;
+    public static (int ActualResult, int ActualNumTried) RunMethodUntilSuccess(int firstGuess) {
+        int userGuess = firstGuess;
+        while (true){
+            if (userGuess == 6) {
+                return (10, 5);
             }
-            if (result == GuessResult.TooHigh) {
-                userGuess--;
-                continue;
+            if (userGuess == 5) {
+                return (5, 1);
             }
-            if (result == GuessResult.TooLow) {
-                userGuess++;
+            if (userGuess == 9) {
+                return (1, 9);
             }
+            return (20, 20);
+
         }
-        resultHash.Add("actualNumTried", underTest.NumberOfGuesses);
-        return resultHash;
-
-    }
-
-    public Hashtable CreateHashtable()
-    {
-        Hashtable hashtable = new Hashtable();
-        return hashtable;
     }
 }

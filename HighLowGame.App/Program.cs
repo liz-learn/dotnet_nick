@@ -3,11 +3,8 @@ using HighLowGame.App;
 
 int targetNumber =  Random.Shared.Next(1, 11);
 
-HighLowGuess game = new(targetNumber)
-{
-    TargetNumber = targetNumber,
-    NumberOfGuesses = 0
-};
+HighLowGuess game = new();
+
 
 
 while (true) {
@@ -17,7 +14,7 @@ while (true) {
         continue;
     }
 
-    GuessResult result = game.TestGuess(userGuess);
+    GuessResult result = game.TestGuess(userGuess, targetNumber);
     if (result == GuessResult.Correct){
         Console.WriteLine($"You won with {game.NumberOfGuesses} guess(es)!\n");
         break;
