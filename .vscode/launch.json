@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": ".NET Core Test (xUnit)",
+        "type": "coreclr",
+        "request": "launch",
+        "args": [],
+        "program": "${workspaceFolder}/tests/bin/Debug/net7.0/AllTest.dll",
+        "cwd": "${workspaceFolder}/tests",
+        "stopAtEntry": false,
+        "console": "internalConsole",
+        "internalConsoleOptions": "openOnSessionStart",
+        "env": {
+          "DOTNET_ENVIRONMENT": "development"
+        }
+      }
+    ]
+  }
