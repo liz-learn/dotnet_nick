@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighLowGame.App", "HighLowG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllTest", "tests\AllTest.csproj", "{F153209B-0CF0-4C57-ABC3-BB6DA9ECB780}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "TodoApp.Api\TodoApp.Api.csproj", "{758CD1A0-44F7-4973-B868-84145034BA9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{F153209B-0CF0-4C57-ABC3-BB6DA9ECB780}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F153209B-0CF0-4C57-ABC3-BB6DA9ECB780}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F153209B-0CF0-4C57-ABC3-BB6DA9ECB780}.Release|Any CPU.Build.0 = Release|Any CPU
+		{758CD1A0-44F7-4973-B868-84145034BA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758CD1A0-44F7-4973-B868-84145034BA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758CD1A0-44F7-4973-B868-84145034BA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758CD1A0-44F7-4973-B868-84145034BA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
