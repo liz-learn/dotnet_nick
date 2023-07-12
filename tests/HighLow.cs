@@ -4,14 +4,12 @@ namespace AllTest;
 
 public class HighLowTests
 {
-    public HighLowGuess underTest;
+    private readonly HighLowGuess _underTest;
 
     public HighLowTests ()
     {
-       underTest = new HighLowGuess();
+       _underTest = new HighLowGuess();
     }
-
-    public int NumberOfGuesses = 0;
 
     [Theory]
     [InlineData(10, 6, 5)]
@@ -19,36 +17,46 @@ public class HighLowTests
     [InlineData(1, 9, 9)]
     public void GuessNumberWorksAsExpected(int target, int firstGuess, int expectedNumTried)
     {
-        (int ActualResult, int ActualNumTried) = RunMethodUntilSuccess(firstGuess, target);
+        (var actualResult, var actualNumTried) = RunMethodUntilSuccess(firstGuess, target);
 
-        Assert.False(ActualResult == 20);
-        Assert.False(ActualNumTried == 20);
-        Assert.True(ActualResult == target);
-        Assert.True(ActualNumTried == expectedNumTried);
+        Assert.False(actualResult == 20);
+        Assert.False(actualNumTried == 20);
+        Assert.True(actualResult == target);
+        Assert.True(actualNumTried == expectedNumTried);
     }
 
-    public (int ActualResult, int ActualNumTried) RunMethodUntilSuccess(int userGuess, int target)
+    private (int, int) RunMethodUntilSuccess(int userGuess, int target)
     {
-        int actualResult = 20;
-        int actualNumTried = 20;
+        var defaultResult = 20;
+        var defaultNumTried = 20;
 
-        while (true){
-            GuessResult resEnum = underTest.TestGuess(userGuess, target);
+        while (true)
+        {
+            var resEnum = _underTest.TestGuess(userGuess, target);
+            var numGuesses = _underTest.NumberOfGuesses;
+            
+            if (numGuesses < 1 | numGuesses > 19)
+                return (defaultResult, defaultNumTried);
 
-            if (resEnum == GuessResult.Correct) {
-                return (userGuess, underTest.NumberOfGuesses);
+            switch (resEnum)
+            {
+                case GuessResult.Correct:
+                    return (userGuess, numGuesses);
+
+                case GuessResult.TooHigh:
+                    userGuess--;
+                    continue;
+
+                case GuessResult.TooLow:
+                    userGuess++;
+                    continue;
+                
+                case GuessResult.Undefined:
+                    return (defaultResult, defaultNumTried);
+
+                default:
+                    return (defaultResult, defaultNumTried);
             }
-
-            if (resEnum == GuessResult.TooHigh) {
-                userGuess--;
-                continue;
-            }
-
-            if (resEnum == GuessResult.TooLow) {
-                userGuess++;
-                continue;
-            }
-            return (actualResult, actualNumTried);
         }
     }
 }

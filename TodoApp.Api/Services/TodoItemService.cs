@@ -22,7 +22,7 @@ namespace TodoApp.Api.Services
         {
             if (string.IsNullOrWhiteSpace(description))
                 return null;
-            int id = _todoItems.Max(x => x.Id + 1);
+            var id = _todoItems.Max(x => x.Id + 1);
             var todoItem = new TodoItem{
                 Id = id,
                 Description = description,
