@@ -55,7 +55,6 @@ public class TodoController : ControllerBase
     
     [HttpDelete("{id:int}", Name = nameof(DeleteTodoItem))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteTodoItem(int id)
     {
         _todoItemService.Delete(id);
