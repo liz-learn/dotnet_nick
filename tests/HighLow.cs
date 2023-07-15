@@ -17,7 +17,7 @@ public class HighLowTests
     [InlineData(1, 9, 9)]
     public void GuessNumberWorksAsExpected(int target, int firstGuess, int expectedNumTried)
     {
-        (var actualResult, var actualNumTried) = RunMethodUntilSuccess(firstGuess, target);
+        var (actualResult, actualNumTried) = RunMethodUntilSuccess(firstGuess, target);
 
         Assert.False(actualResult == 20);
         Assert.False(actualNumTried == 20);
@@ -27,8 +27,8 @@ public class HighLowTests
 
     private (int, int) RunMethodUntilSuccess(int userGuess, int target)
     {
-        var defaultResult = 20;
-        var defaultNumTried = 20;
+        const int defaultResult = 20;
+        const int defaultNumTried = 20;
 
         while (true)
         {
