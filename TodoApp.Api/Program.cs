@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationContext>(optionsAction: options =>
     options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
     options.UseSqlServer(builder.Configuration.GetConnectionString("mssql"));
 });
-builder.Services.AddSingleton<ITodoItemService, TodoItemService>();
+builder.Services.AddScoped<ITodoItemService, DbTodoItemService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();

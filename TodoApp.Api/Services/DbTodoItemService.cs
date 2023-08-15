@@ -20,7 +20,10 @@ public class DbTodoItemService : ITodoItemService
 
     public TodoItem? GetById(int id)
     {
-        throw new NotImplementedException();
+        var target = _context.TodoItems.SingleOrDefault(x => x.Id == id);
+        if (target is null)
+            _logger.LogWarning("No todo fetched: TodoId, {TodoId}, is invalid", id);
+        return target;
     }
 
     public int? Create(string description, bool isCompleted = false)
