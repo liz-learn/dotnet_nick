@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Api.Data;
 using TodoApp.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddDbContext<ApplicationContext>(optionsAction: options =>
+{
+    options.EnableDetailedErrors();
+    options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
+    options.UseSqlServer(builder.Configuration.GetConnectionString("mssql"));
+});
 builder.Services.AddSingleton<ITodoItemService, TodoItemService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
