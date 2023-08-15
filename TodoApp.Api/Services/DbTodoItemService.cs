@@ -1,4 +1,5 @@
 using TodoApp.Api.Data;
+using TodoApp.Api.DTOs;
 
 namespace TodoApp.Api.Services;
 
@@ -12,15 +13,25 @@ public class DbTodoItemService : ITodoItemService
         _logger = logger;
         _context = context;
     }
-    public IQueryable<TodoItem> GetAll()
+    public IQueryable<TodoItemDto> GetAll()
     {
         _logger.LogInformation("Getting all todo items");
-        return _context.TodoItems;
+        return _context.TodoItems.Select(x => new TodoItemDto()
+        {
+            Description = x.Description,
+            IsComplete = x.IsCompleted
+        });
     }
 
-    public TodoItem? GetById(int id)
+    public TodoItemDto? GetById(int id)
     {
-        var target = _context.TodoItems.SingleOrDefault(x => x.Id == id);
+        var target = _context.TodoItems
+            .Where(x => x.Id == id)
+            .Select(x => new TodoItemDto
+            {
+                Description = x.Description,
+                IsComplete = x.IsCompleted
+            }).SingleOrDefault();
         if (target is null)
             _logger.LogWarning("No toDo fetched: TodoId, {TodoId}, is invalid", id);
         return target;
@@ -61,7 +72,7 @@ public class DbTodoItemService : ITodoItemService
     {
         TodoItem? target = _context.TodoItems.SingleOrDefault(x => x.Id == id);
         if (target is null) {
-            _logger.LogWarning("Invalid id, {TodoId}, therefore toDo will be deleted", id);
+            _logger.LogWarning("Invalid id, {TodoId}, toDo already does not exist", id);
             return;
         }
         _context.TodoItems.Remove(target);

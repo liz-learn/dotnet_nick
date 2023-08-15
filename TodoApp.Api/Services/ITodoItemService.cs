@@ -1,12 +1,13 @@
 using TodoApp.Api.Data;
+using TodoApp.Api.DTOs;
 
 namespace TodoApp.Api.Services
 {
     public interface ITodoItemService
     {
-        IQueryable<TodoItem> GetAll();
+        IQueryable<TodoItemDto> GetAll();
 
-        TodoItem? GetById(int id);
+        TodoItemDto? GetById(int id);
 
         int? Create(string description, bool isCompleted = false);
 

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Data;
+using TodoApp.Api.DTOs;
 using TodoApp.Api.Models;
 using TodoApp.Api.Services;
 
@@ -17,13 +18,13 @@ public class TodoController : ControllerBase
     }
 
     [HttpGet(Name = nameof(GetAllTodos))]
-    public ActionResult<IEnumerable<TodoItem>> GetAllTodos()
+    public ActionResult<IEnumerable<TodoItemDto>> GetAllTodos()
     {
         return Ok(_todoItemService.GetAll());
     }
     
     [HttpGet("{id:int}", Name = nameof(GetTodoById))]
-    public ActionResult<TodoItem> GetTodoById(int id)
+    public ActionResult<TodoItemDto> GetTodoById(int id)
     {
         var todo = _todoItemService.GetById(id);
         if (todo is null)
